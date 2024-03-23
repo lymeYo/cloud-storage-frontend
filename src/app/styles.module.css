@@ -1,0 +1,40 @@
+.section:not(:first-child) {
+  margin-top: 45px;
+}
+
+.createButtonsMobile {
+  display: none;
+  margin: 10px 0 15px;
+  width: 100%;
+}
+
+.createButtonsDesktop {
+  width: min-content;
+  position: fixed;
+  z-index: 10;
+  right: 50px;
+  bottom: 30px;
+}
+
+@media (max-width: 768px) {
+  .createButtonsDesktop {
+    display: none;
+  }
+
+  .createButtonsMobile {
+    display: block;
+  }
+}
+
+.test {
+  background-color: wheat;
+  display: flex;
+  overflow-x: auto;
+}
+
+.test div {
+  background-color: palegreen;
+  border: 2px solid firebrick;
+  min-width: 300px;
+  height: 100px;
+}

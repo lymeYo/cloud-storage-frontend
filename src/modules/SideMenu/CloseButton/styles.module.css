@@ -1,0 +1,21 @@
+.wrapper {
+  display: none;
+}
+
+.button svg {
+  width: 30px;
+  height: 30px;
+  fill: var(--main-dim-clr);
+}
+
+@media (max-width: 1024px) {
+  .wrapper {
+    flex: 1 1 auto;
+    box-sizing: border-box;
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+    align-items: end;
+    /* padding: 0 10px; */
+  }
+}

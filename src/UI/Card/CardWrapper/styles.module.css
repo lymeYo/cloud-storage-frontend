@@ -1,0 +1,5 @@
+.wrapper {
+  border: 1px solid var(--main-dim-clr);
+  padding: 0.65rem;
+  border-radius: 5px;
+}

@@ -1,0 +1,40 @@
+.info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+}
+
+.block {
+  display: flex;
+  gap: 8px;
+}
+
+.label {
+  color: var(--main-dim-clr);
+}
+
+.value {
+  font-size: 1.1rem;
+}
+
+@media (max-width: 550px) {
+  .info {
+    flex-direction: row;
+    width: 100%;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 425px) {
+  .info {
+    justify-content: space-between;
+    gap: 10px;
+  }
+}
+
+@media (max-width: 390px) {
+  .block {
+    flex-direction: column;
+  }
+}

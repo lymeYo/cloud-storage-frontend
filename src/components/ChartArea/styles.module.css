@@ -1,0 +1,22 @@
+.wrapper {
+  display: flex;
+  gap: 100px;
+}
+
+.chartContainer {
+  width: 225px;
+  height: 225px;
+}
+
+.chartContainer canvas {
+  width: 100%;
+  height: 100%;
+}
+
+@media (max-width: 550px) {
+  .wrapper {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+}

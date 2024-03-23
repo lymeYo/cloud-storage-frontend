@@ -1,0 +1,11 @@
+.section {
+}
+
+.section + .section {
+  margin-top: 30px;
+}
+
+.info {
+  color: var(--main-dim-clr);
+  font-size: 0.9rem;
+}

@@ -1,0 +1,74 @@
+.wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.button {
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  width: 100%;
+  max-width: 170px;
+  box-sizing: border-box;
+  gap: 30px;
+  padding: 4px 16px;
+  border-radius: 5px;
+  transition: translate 0.3s;
+}
+
+.button:active {
+  translate: 0 1px;
+}
+
+.upload {
+  background-color: var(--link-clr);
+  border: 1px solid var(--text-clr);
+}
+
+.fileInput {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+.upload:has(.fileInput:focus-visible) {
+  outline: 2px solid var(--text-clr);
+}
+
+.create {
+  background-color: var(--second-dark-clr);
+  border: 1px solid var(--text-clr);
+}
+
+@media (hover) {
+  .create:hover {
+    background-color: var(--main-hover-clr);
+  }
+
+  .upload:hover {
+    background-color: var(--link-hover-clr);
+  }
+}
+
+@media (max-width: 768px) {
+  .wrapper {
+    gap: 10px;
+  }
+}
+
+@media (max-width: 450px) {
+  .wrapper {
+    gap: 10px;
+  }
+
+  .wrapper button {
+    font-size: 1.3rem;
+    padding: 6px 12px 6px 8px;
+  }
+}

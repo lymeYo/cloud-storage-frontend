@@ -1,0 +1,45 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+  gap: 25px;
+  color: var(--main-dim-clr);
+}
+
+.item {
+  --transition-time: 0.3s;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: color var(--transition-time);
+}
+
+.item svg path {
+  transition: fill var(--transition-time);
+}
+
+.item.active {
+  color: var(--link-clr);
+}
+
+.item.active svg path {
+  fill: var(--link-clr);
+}
+
+.svgWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 25px;
+  margin-right: 8px;
+}
+
+@media (hover) {
+  .item:hover {
+    color: var(--link-clr);
+  }
+
+  .item:hover svg path {
+    fill: var(--link-clr);
+  }
+}

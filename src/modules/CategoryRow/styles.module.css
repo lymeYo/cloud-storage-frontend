@@ -1,0 +1,12 @@
+.list {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  padding: 2px;
+}
+
+@media (max-width: 768px) {
+  .list {
+    gap: 15px;
+  }
+}

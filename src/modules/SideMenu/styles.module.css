@@ -1,0 +1,58 @@
+.backdrop {
+}
+
+.wrapper {
+  position: fixed;
+  top: 0;
+  height: 100%;
+  background-color: var(--second-dark-clr);
+  border-right: 1px solid var(--main-dim-clr);
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem 1rem;
+  box-sizing: border-box;
+}
+
+.header {
+  padding: 0 10px;
+  display: flex;
+  align-items: flex-end;
+  gap: 20px;
+}
+
+.label {
+  font-size: 1.2rem;
+  translate: 0 -0.6rem;
+}
+
+@media (max-width: 1024px) {
+  .backdrop {
+    position: fixed;
+    z-index: 5;
+    left: calc(-1 * var(--side-menu-width));
+    top: 0;
+    right: 100vw;
+    bottom: 0;
+    background-color: transparent;
+    --transition: left 0.5s, background-color 0.5s;
+    transition:
+      var(--transition),
+      right 0s 0.5s;
+  }
+
+  .backdrop.open {
+    transition: var(--transition);
+    background-color: var(--main-hover-clear-clr);
+    right: 0;
+    left: 0;
+  }
+
+  .wrapper {
+    /* position: fixed;
+    z-index: 5;
+    left: 0;
+    top: 0;
+    bottom: 0; */
+    width: var(--side-menu-width);
+  }
+}

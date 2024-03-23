@@ -1,0 +1,99 @@
+.dialog {
+  z-index: 100;
+  width: 100%;
+  max-width: 500px;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  color: var(--text-clr);
+}
+
+.dialog::backdrop {
+  background-color: var(--main-hover-clear-clr);
+}
+
+.dialogContent {
+  border-radius: 5px;
+  border: 2px solid var(--main-dim-clr);
+  background-color: var(--main-dark-clr);
+  box-sizing: border-box;
+  padding: 30px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.header svg {
+  width: 20px;
+  height: 20px;
+}
+
+.switcher {
+  text-decoration: underline;
+}
+
+.close {
+}
+
+.close:hover svg path {
+  stroke: var(--main-dim-clr);
+}
+
+.switcher:hover {
+  color: var(--main-dim-clr);
+}
+
+.form {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+  width: 100%;
+}
+
+.form input,
+.submit {
+  border-radius: 100px;
+  font-size: 1.15rem;
+  padding: 0.25rem 1rem;
+}
+
+.form input {
+  border: 3px solid transparent;
+}
+
+.form input:focus:invalid {
+  border-color: var(--warning-clr);
+}
+
+.submit {
+  margin-top: 10px;
+  text-align: center;
+  background-color: var(--link-clr);
+  transition: 0.2s background-color;
+  /* font-size: 1rem; */
+}
+
+.submit:hover {
+  background-color: var(--link-hover-clr);
+}
+
+.errorMess {
+  color: var(--warning-clr);
+}
+
+@media (max-width: 680px) {
+  .dialogContent {
+    padding: 15px;
+  }
+
+  /* .form input,
+  .submit {
+    border-radius: 100px;
+    height: 40px;
+    font-size: 1.35rem;
+    padding: 0 15px;
+  } */
+}

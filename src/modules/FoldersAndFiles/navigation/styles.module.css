@@ -1,0 +1,26 @@
+.wrapper {
+  color: var(--main-dim-clr);
+  display: flex;
+  gap: 10px;
+}
+
+.back {
+  display: flex;
+  align-items: center;
+}
+
+.back svg path {
+  fill: var(--main-dim-clr);
+}
+
+.back:hover svg path {
+  fill: rgb(from var(--main-dim-clr) r g b / 0.8);
+}
+
+.path {
+  flex: 1 1 auto;
+  padding: 5px;
+  background-color: var(--second-dark-clr);
+  border: 1px solid var(--main-dim-clr);
+  border-radius: 5px;
+}

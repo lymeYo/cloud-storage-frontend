@@ -1,0 +1,7 @@
+.createButtonsDesktop {
+  width: min-content;
+  position: fixed;
+  z-index: 10;
+  right: 50px;
+  bottom: 30px;
+}

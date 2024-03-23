@@ -1,0 +1,23 @@
+.list {
+  display: flex;
+  flex-direction: column;
+}
+
+.list li {
+  --border: 1px solid var(--main-dim-clr);
+  border-top: var(--border);
+  border-bottom: var(--border);
+}
+
+.list li:first-child {
+  border-top: none;
+  border-bottom: none;
+}
+
+.list li:nth-child(2) {
+  border-top: none;
+}
+
+.list li:last-child {
+  border-bottom: none;
+}

@@ -1,0 +1,20 @@
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.item {
+  border: 1px solid var(--main-dim-clr);
+  border-radius: 5px;
+  padding: 0.65rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.itemBody {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}

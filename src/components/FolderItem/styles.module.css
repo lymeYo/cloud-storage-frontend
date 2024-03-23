@@ -1,0 +1,39 @@
+.wrapper {
+  background-color: var(--second-dark-clr);
+  cursor: pointer;
+  min-width: 10rem;
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.folderSvgWrapper {
+  display: flex;
+  align-items: center;
+}
+
+.folderSvgWrapper svg {
+  width: 40px;
+  height: 40px;
+}
+
+.folderSvgWrapper svg path {
+  fill: var(--link-clr);
+}
+
+.menuWrapper {
+  background-color: var(--second-dark-clr);
+  height: min-content;
+  width: min-content;
+  border-radius: 100%;
+}
+
+.wrapper:hover:has(.menuWrapper:not(:hover)),
+.menuWrapper:hover {
+  background-color: var(--main-hover-clr);
+}

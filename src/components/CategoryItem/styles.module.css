@@ -1,0 +1,17 @@
+.wrapper {
+  background-color: var(--second-dark-clr);
+  cursor: pointer;
+  width: 190px;
+}
+
+@media (hover) {
+  .wrapper:hover {
+    background-color: var(--main-hover-clr);
+  }
+}
+
+.content {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}

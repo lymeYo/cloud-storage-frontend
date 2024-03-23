@@ -1,0 +1,15 @@
+.wrapper {
+  display: flex;
+  /* place-items: center center; */
+  align-items: center;
+}
+
+.wrapper svg {
+  fill: var(--text-clr);
+}
+
+.wrapper:hover svg,
+.wrapper:hover svg path,
+.wrapper:hover svg path {
+  fill: var(--link-clr);
+}
