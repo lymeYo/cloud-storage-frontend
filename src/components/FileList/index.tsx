@@ -1,24 +1,32 @@
+import Skeleton from "react-loading-skeleton"
+
 import { Tfile } from "@/store/features/storage/utils"
 import FileItem from "./FileItem"
 import Labels from "./Labels"
+
 import styles from "./styles.module.css"
-import { Timestamp } from "firebase/firestore"
 
 interface Props {
-  files: Tfile[]
+  files?: Tfile[]
+  isLoading: boolean
 }
 
-const FileList = ({ files }: Props) => {
+const FileList = ({ files, isLoading }: Props) => {
   return (
     <ul className={styles.list}>
-      <li>
+      <li className={styles.listItem}>
         <Labels />
       </li>
-      {files.map((file) => (
-        <li key={file.name}>
-          <FileItem file={file} />
-        </li>
-      ))}
+
+      {files ? (
+        files.map((file) => (
+          <li className={styles.listItem} key={file.name}>
+            <FileItem file={file} />
+          </li>
+        ))
+      ) : isLoading ? (
+        <Skeleton count={5} className={styles.skeleton} />
+      ) : null}
     </ul>
   )
 }

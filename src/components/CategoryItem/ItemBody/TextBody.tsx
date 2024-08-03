@@ -1,7 +1,14 @@
-import CardBody from "@/UI/Card/CardBody"
+import { getNoun } from "@/utils"
+import Body from "./Body"
 
-const TextBody = () => {
-  return <CardBody title='Документы' info='456 файлов' />
+interface Props {
+  count: number
+}
+
+const TextBody = ({ count }: Props) => {
+  const label = getNoun(count, "документ", "документа", "документов")
+
+  return <Body title='Документы' info={`${count} ${label}`} />
 }
 
 export default TextBody

@@ -1,0 +1,27 @@
+.dialog {
+  width: fit-content;
+  height: fit-content;
+  min-width: 200px;
+  position: absolute;
+  margin: 0;
+  left: auto;
+  top: auto;
+  right: auto;
+  bottom: auto;
+  background-color: var(--main-hover-clr);
+  border: 1px solid var(--main-dim-clr);
+  padding: 0.8rem 0;
+  border-radius: 8px;
+}
+
+.list {
+}
+
+.listItem {
+  padding: 0.4rem 0.8rem;
+  width: 100%;
+}
+
+.listItem:hover {
+  background-color: var(--second-dark-clr);
+}

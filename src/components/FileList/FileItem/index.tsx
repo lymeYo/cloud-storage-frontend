@@ -2,7 +2,6 @@ import Image from "next/image"
 import cx from "classnames"
 
 import TextFileImg from "@/assets/images/FileTypes/Text.png"
-import CrumbsMenu from "@/UI/CrumbsMenu"
 import fileItemStyles from "../fileItemStyles.module.css"
 
 import styles from "./styles.module.css"
@@ -35,31 +34,40 @@ interface Props {
 }
 
 const Item = ({ file }: Props) => {
-  const uploadDateStr = new Date(file.uploadDate).toLocaleDateString("ru-Ru", {
+  const uploadDateStr = new Date(file.updatedAt).toLocaleDateString("ru-Ru", {
     year: "numeric",
     month: "long",
     day: "numeric"
   })
 
+  const openContextMenu = () => {
+    // TODO
+    console.log("openContextMenu")
+  }
+
   return (
-    <div className={cx(fileItemStyles.row, styles.rowItem)}>
+    <button
+      onClick={openContextMenu}
+      className={cx(fileItemStyles.row, styles.rowItem)}
+      data-context-click
+      data-context-id={file.id}
+      data-context-type='file'
+    >
       <div className={styles.titleArea}>
         <Image src={TextFileImg.src} className={styles.fileTypeImg} width={35} height={35} alt='Файл с текстом' />
         <span className={styles.title}>{file.name}</span>
-        <div className={styles.titleAreaMenu}>
+        {/* <div className={styles.titleAreaMenu}>
           <CrumbsMenu options={options} />
-        </div>
+        </div> */}
       </div>
       <span className={styles.size}>
         {bytesToKB(file.size)} KB<span className={fileItemStyles.bindingComma}>,</span>
       </span>
       <div className={styles.lastArea}>
         <span className={styles.date}>{uploadDateStr}</span>
-        <div className={styles.lastAreaMenu}>
-          <CrumbsMenu options={options} />
-        </div>
+        {/*<div className={styles.lastAreaMenu}> <CrumbsMenu options={options} /> </div>*/}
       </div>
-    </div>
+    </button>
   )
 }
 export default Item

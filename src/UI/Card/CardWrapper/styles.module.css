@@ -3,3 +3,7 @@
   padding: 0.65rem;
   border-radius: 5px;
 }
+
+.wrapper.withButton:hover {
+  border-color: var(--link-clr);
+}

@@ -11,6 +11,10 @@
   display: none;
 }
 
+.rowItem:hover .title {
+  color: var(--link-clr);
+}
+
 .title {
   max-width: 100%;
   overflow: hidden;

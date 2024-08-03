@@ -1,21 +1,13 @@
-import { signOut } from "firebase/auth"
-
 import ExitSvg from "@/UI/Svgs/ExitSvg"
 import { useAppDispatch } from "@/store/hooks"
-import { logout } from "@/store/features/auth/authSlice"
-import { auth } from "@/database/firebase"
 import styles from "./styles.module.css"
+import { openConfirmModal } from "@/store/features/ui/uiSlice"
 
 const Auth = () => {
   const dispatch = useAppDispatch()
 
   const exitHandler = async () => {
-    try {
-      await signOut(auth)
-      dispatch(logout())
-    } catch (err) {
-      console.error(err)
-    }
+    dispatch(openConfirmModal("logout"))
   }
 
   return (

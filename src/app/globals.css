@@ -3,6 +3,7 @@
   --main-dark-clr: #181818;
   --second-dark-clr: #1f1f1f;
   --main-dim-clr: #848484;
+  --main-dim-clr-hover: #848484b6;
   --main-hover-clr: #242424;
   --main-hover-clear-clr: #24242484;
   /* --main-hover-clr: #4e4e4e; */
@@ -22,17 +23,21 @@ body {
 }
 
 body {
-  background-color: var(--main-dark-clr);
+  min-height: 100vh;
+  background-color: var(--main-dark-clr); 
+  /* для contextmenu */
+  position: relative;
 }
 
 body,
 input,
 button {
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  font-family: var(--font-noto_sans);
 }
 
 body,
-button, input {
+button,
+input {
   color: var(--text-clr);
 }
 
@@ -83,6 +88,7 @@ button {
   cursor: pointer;
   margin: 0;
   padding: 0;
+  font-size: 1rem;
 }
 
 button:focus-visible {

@@ -2,6 +2,7 @@
 import { ReactNode } from "react"
 
 import AuthModal from "@/modules/AuthModal"
+import ActionsModal from "@/modules/ActionsModal"
 import Greeting from "./Greeting"
 import MenuButton from "./MenuButton"
 import Search from "./Search"
@@ -17,6 +18,7 @@ const HeaderLayout = ({ children }: Props) => {
   return (
     <>
       <AuthModal />
+      <ActionsModal />
       <div className={styles.contentWithSideMenu}>
         <SideMenu />
         <div className='container'>

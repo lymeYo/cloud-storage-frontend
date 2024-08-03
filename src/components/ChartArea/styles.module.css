@@ -6,11 +6,16 @@
 .chartContainer {
   width: 225px;
   height: 225px;
+  color: #8d8d8d5c;
 }
 
 .chartContainer canvas {
   width: 100%;
   height: 100%;
+}
+
+.chartContainer.invisivle canvas {
+  opacity: 0;
 }
 
 @media (max-width: 550px) {

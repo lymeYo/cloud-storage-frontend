@@ -14,7 +14,7 @@
 }
 
 .back:hover svg path {
-  fill: rgb(from var(--main-dim-clr) r g b / 0.8);
+  fill: var(--main-dim-clr-hover);
 }
 
 .path {

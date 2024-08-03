@@ -1,31 +1,36 @@
+import { TfileType } from "@/utils/file"
 import CardWrapper from "@/UI/Card/CardWrapper"
-import FileTypeImg from "@/UI/FileTypeImg"
-import { TfileType } from "@/UI/utils"
 import TextBody from "./ItemBody/TextBody"
 import VideoBody from "./ItemBody/VideoBody"
 import ImageBody from "./ItemBody/ImageBody"
+import AudioBody from "./ItemBody/AudioBody"
 import OtherBody from "./ItemBody/OtherBody"
 
 import styles from "./styles.module.css"
+import FileTypeImg from "@/UI/FileTypeImg"
 
 interface Props {
   type: TfileType
+  count: number
 }
 
-const RowItem = ({ type }: Props) => {
-  let ItemBody
-
-  if (type == "text") ItemBody = TextBody
-  else if (type == "video") ItemBody = VideoBody
-  else if (type == "image") ItemBody = ImageBody
-  else ItemBody = OtherBody
-
+const RowItem = ({ type, count }: Props) => {
   return (
-    <div className={styles.wrapper} tabIndex={0}>
+    <div className={styles.wrapper}>
       <CardWrapper>
         <div className={styles.content}>
           <FileTypeImg type={type} />
-          <ItemBody />
+          {type == "text" ? (
+            <TextBody count={count} />
+          ) : type == "video" ? (
+            <VideoBody count={count} />
+          ) : type == "image" ? (
+            <ImageBody count={count} />
+          ) : type == "audio" ? (
+            <AudioBody count={count} />
+          ) : (
+            <OtherBody count={count} />
+          )}
         </div>
       </CardWrapper>
     </div>

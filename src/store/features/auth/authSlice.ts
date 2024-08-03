@@ -1,37 +1,24 @@
 import { createSlice } from "@reduxjs/toolkit"
-import type { Action, PayloadAction } from "@reduxjs/toolkit"
+import type { PayloadAction } from "@reduxjs/toolkit"
 
-import { useAppSelector } from "@/store/hooks"
 import { Tuser } from "./utils"
 
-export interface AuthState {
-  isAuth: boolean
-  userData: Tuser | null
-}
+export interface AuthState {}
 
-const initialState: AuthState = {
-  isAuth: false,
-  userData: null
-}
+const initialState: AuthState = {}
 
 export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    setIsAuth: (state, action: PayloadAction<boolean>) => {
-      state.isAuth = action.payload
-    },
-    setUserData: (state, action: PayloadAction<Tuser>) => {
-      state.userData = action.payload
-      state.isAuth = true
-    },
     logout: (state) => {
-      state.userData = null
-      state.isAuth = false
+      // state.userData = null
+      // state.isAuth = false
+      console.log("logout!")
     }
   }
 })
 
-export const { setIsAuth, setUserData, logout } = authSlice.actions
+export const { logout } = authSlice.actions
 
 export default authSlice.reducer

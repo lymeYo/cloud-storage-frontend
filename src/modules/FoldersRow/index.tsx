@@ -1,29 +1,26 @@
 "use client"
 
+import Skeleton from "react-loading-skeleton"
+
 import FolderItem from "@/components/FolderItem"
+import { useAllFoldersQuery } from "@/store/api/storage"
+
 import styles from "./styles.module.css"
 
 const FoldersRow = () => {
+  const { data, isLoading } = useAllFoldersQuery({ limit: 10, orderType: "DESC" })
+
   return (
     <ul className={styles.list}>
-      <li>
-        <FolderItem title='Портфолио' info='43 файла' />
-      </li>
-      <li>
-        <FolderItem title='Картинки' info='112 файлов' />
-      </li>
-      <li>
-        <FolderItem title='Временное' info='21 файл' />
-      </li>
-      <li>
-        <FolderItem title='Доклады' info='7 файлов' />
-      </li>
-      <li>
-        <FolderItem title='Покупки' info='0 файлов' />
-      </li>
-      <li>
-        <FolderItem title='Планы' info='6 файла' />
-      </li>
+      {data ? (
+        data.map((folder) => (
+          <li key={folder.id}>
+            <FolderItem title={folder.name} storageId={folder.id} />
+          </li>
+        ))
+      ) : isLoading ? (
+        <Skeleton count={3} containerClassName={styles.skeletonWrapper} className={styles.skeleton} />
+      ) : null}
     </ul>
   )
 }

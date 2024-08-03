@@ -1,9 +1,9 @@
-import { useAppSelector } from "@/store/hooks"
 import Auth from "./Auth"
 import Unauth from "./Unauth"
+import { useIsAuth } from "@/store/api/hooks"
 
 const Account = () => {
-  const { isAuth, userData } = useAppSelector((store) => store.auth)
+  const isAuth = useIsAuth()
 
   if (isAuth) return <Auth />
   else return <Unauth />

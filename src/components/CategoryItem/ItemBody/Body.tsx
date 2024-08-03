@@ -5,7 +5,7 @@ interface Props {
   info: string
 }
 
-const CardBody = ({ title, info }: Props) => {
+const Body = ({ title, info }: Props) => {
   return (
     <div className={styles.body}>
       <span className={styles.title}>{title}</span>
@@ -13,4 +13,4 @@ const CardBody = ({ title, info }: Props) => {
     </div>
   )
 }
-export default CardBody
+export default Body

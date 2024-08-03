@@ -5,6 +5,11 @@
   width: 100%;
 }
 
+.cardContainer {
+  /* За этот блок цепляется меню */
+  position: relative;
+}
+
 .header {
   display: flex;
   justify-content: space-between;
@@ -33,7 +38,24 @@
   border-radius: 100%;
 }
 
-.wrapper:hover:has(.menuWrapper:not(:hover)),
-.menuWrapper:hover {
-  background-color: var(--main-hover-clr);
+.body {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.title {
+}
+
+.info {
+  color: var(--main-dim-clr);
+  font-size: 0.8rem;
+}
+
+.info,
+.title {
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

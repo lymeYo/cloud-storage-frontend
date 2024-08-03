@@ -1,156 +1,121 @@
 "use client"
-import { FormEvent, MouseEvent, useEffect, useRef, useState } from "react"
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth"
-import type { User } from "firebase/auth"
+import { FormEvent, useEffect, useRef, useState } from "react"
+import type { FetchBaseQueryError } from "@reduxjs/toolkit/query"
+import type { SerializedError } from "@reduxjs/toolkit/react"
 
-import { addDoc, collection } from "firebase/firestore"
-
-import { auth, db } from "@/database/firebase"
 import CloseSvg from "@/UI/Svgs/CloseSvg"
 import { useAppDispatch, useAppSelector } from "@/store/hooks"
-import { TerrorMessagesValue, errorMessages } from "./utils"
 import { closeAuthModal } from "@/store/features/ui/uiSlice"
-import { setUserData } from "@/store/features/auth/authSlice"
-import styles from "./styles.module.css"
+import { useLoginMutation, useRegistrationMutation } from "@/store/api/auth"
+import { useProfileQuery } from "@/store/api/user"
+import { type Tauth, getErrorMessByStatus } from "./utils"
 
-type Tauth = "login" | "register"
+import styles from "./styles.module.css"
+import DialogModal from "@/UI/DialogModal"
 
 const AuthModal = () => {
   const dispatch = useAppDispatch()
 
   const [type, setType] = useState<Tauth>("login")
-  const [isError, setIsError] = useState(false)
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
-  const dialogElRef = useRef<HTMLDialogElement>(null)
-  const emailElRef = useRef<HTMLInputElement>(null)
+  const usernameElRef = useRef<HTMLInputElement>(null)
   const passwordElRef = useRef<HTMLInputElement>(null)
-  const errorMessage = useRef<TerrorMessagesValue>(errorMessages.default)
+
+  const [loginMutation, { error: loginError, isSuccess: loginSuccess }] = useLoginMutation()
+  const [registrationMutation, { data: registrationResponse, error: registrationError }] = useRegistrationMutation()
+  const { data: profileResponse } = useProfileQuery(null, { skip: !loginSuccess })
 
   const { isAuthModalOpen } = useAppSelector((store) => store.ui)
+
+  const handleSubmit = (event: FormEvent) => {
+    event.preventDefault()
+    const username = usernameElRef.current?.value
+    const password = passwordElRef.current?.value
+    if (!username || !password) return
+
+    if (type == "login") login(username, password)
+    else registration(username, password)
+  }
+
+  const handleAuthSuccess = () => {
+    if (usernameElRef.current) usernameElRef.current.value = ""
+    if (passwordElRef.current) passwordElRef.current.value = ""
+
+    dispatch(closeAuthModal())
+  }
+
+  const handleInputFocus = () => {
+    setErrorMessage(null)
+  }
 
   const changeType = () => {
     setType((prev) => (prev == "login" ? "register" : "login"))
   }
 
-  const close = () => {
+  const closeListener = () => {
     dispatch(closeAuthModal())
   }
 
-  const handleBackdropClick = (event: MouseEvent<HTMLDialogElement>) => {
-    if (event.currentTarget === event.target) close()
-  }
-
-  const handleSubmit = (event: FormEvent) => {
-    event.preventDefault()
-    const email = emailElRef.current?.value
-    const password = passwordElRef.current?.value
-    if (!email || !password) return
-
-    if (type == "login") login(email, password)
-    else register(email, password)
-  }
-
-  const errorHandler = (err: string) => {
-    switch (err) {
-      case "auth/email-already-in-use":
-        errorMessage.current = errorMessages.emailAlreadyInUse
-        break
-      case "auth/invalid-credential":
-        errorMessage.current = errorMessages.invalidLoginData
-        break
-      case "auth/invalid-email":
-        errorMessage.current = errorMessages.invalidRegisterEmail
-        break
-      case "auth/weak-password":
-        errorMessage.current = errorMessages.invalidRegisterPassword
-        break
-      default:
-        errorMessage.current = errorMessages.default
-    }
-
-    setIsError(true)
-  }
-
-  const handleAuthSuccess = (user: User) => {
-    if (emailElRef.current) emailElRef.current.value = ""
-    if (passwordElRef.current) passwordElRef.current.value = ""
-
-    setIsError(false)
-    dispatch(setUserData({ uid: user.uid, email: user.email }))
-    dispatch(closeAuthModal())
-  }
-
-  const login = async (email: string, password: string) => {
+  const login = async (username: string, password: string) => {
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password)
-      handleAuthSuccess(userCredential.user)
+      loginMutation({ username, password })
     } catch (err: any) {
       console.error(err)
-      errorHandler(err.code)
     }
   }
 
-  const register = async (email: string, password: string) => {
+  const registration = async (username: string, password: string) => {
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password)
-      handleAuthSuccess(userCredential.user)
+      registrationMutation({ username, password })
     } catch (err: any) {
       console.error(err)
-      errorHandler(err.code)
     }
   }
 
-  const handleInputsFocus = () => {
-    setIsError(false)
-  }
+  //автоматический вход после регистрации
+  useEffect(() => {
+    if (registrationResponse) {
+      login(registrationResponse.username, registrationResponse.password)
+    }
+  }, [registrationResponse])
 
   useEffect(() => {
-    if (!dialogElRef.current) return
+    if (profileResponse) handleAuthSuccess()
+  }, [profileResponse])
 
-    if (isAuthModalOpen) {
-      dialogElRef.current.showModal()
-      document.body.style.overflow = "hidden"
+  //обработка ошибок
+  useEffect(() => {
+    let curError: FetchBaseQueryError | SerializedError | undefined
+    if (type == "login") curError = loginError
+    if (type == "register") curError = registrationError
+
+    if (curError && "status" in curError && typeof curError.status === "number") {
+      setErrorMessage(getErrorMessByStatus(curError.status, type))
     } else {
-      dialogElRef.current.close()
+      setErrorMessage(null)
     }
-  }, [isAuthModalOpen])
-
-  useEffect(() => {
-    const dialogEl = dialogElRef.current
-    if (!dialogEl) return
-
-    const closeListener = () => {
-      document.body.style.overflow = ""
-    }
-
-    dialogEl.addEventListener("close", closeListener)
-
-    return () => {
-      dialogEl.removeEventListener("close", closeListener)
-    }
-  }, [])
+  }, [loginError, registrationError, type])
 
   return (
-    <dialog onClick={handleBackdropClick} className={styles.dialog} ref={dialogElRef}>
-      <div className={styles.dialogContent}>
-        <div className={styles.header}>
-          <button onClick={changeType} className={styles.switcher}>
-            {type == "login" ? "Зарегистрироваться" : "Войти в аккаунт"}
-          </button>
-          <button onClick={close} className={styles.close}>
-            <CloseSvg />
-          </button>
-        </div>
-        <form onSubmit={handleSubmit} className={styles.form} action=''>
-          <input onFocus={handleInputsFocus} type='email' placeholder='Почта' ref={emailElRef} />
-          <input onFocus={handleInputsFocus} type='text' placeholder='Пароль' ref={passwordElRef} />
-          <button className={styles.submit} type='submit'>
-            {type == "login" ? "Войти" : "Регистрация"}
-          </button>
-          {isError && <span className={styles.errorMess}>{errorMessage.current}</span>}
-        </form>
+    <DialogModal isOpen={isAuthModalOpen} handleReduxClose={closeListener}>
+      <div className={styles.header}>
+        <button onClick={changeType} className={styles.switcher}>
+          {type == "login" ? "Зарегистрироваться" : "Войти в аккаунт"}
+        </button>
+        <button onClick={closeListener} className={styles.close}>
+          <CloseSvg />
+        </button>
       </div>
-    </dialog>
+      <form onSubmit={handleSubmit} className={styles.form} action=''>
+        <input onFocus={handleInputFocus} type='text' placeholder='Имя пользователя' ref={usernameElRef} />
+        <input onFocus={handleInputFocus} type='text' placeholder='Пароль' ref={passwordElRef} />
+        <button className={styles.submit} type='submit'>
+          {type == "login" ? "Войти" : "Регистрация"}
+        </button>
+        {errorMessage && <span className={styles.errorMess}>{errorMessage}</span>}
+      </form>
+    </DialogModal>
   )
 }
 export default AuthModal

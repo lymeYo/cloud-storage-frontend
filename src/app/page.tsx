@@ -1,15 +1,31 @@
+"use client"
+
+import React, { useEffect } from "react"
+
+import Image from "next/image"
+
 import HeaderLayout from "@/layouts/HeaderLayout"
 import RecentFiles from "@/modules/RecentFiles"
 import CategoryRow from "@/modules/CategoryRow"
 import FoldersRow from "@/modules/FoldersRow"
-import SideMenu from "@/modules/SideMenu"
 import StorageStatistics from "@/modules/StorageStatistics"
 import CreateButtons from "@/components/CreateButtons"
 import SectionTitle from "@/UI/SectionTitle"
 
 import styles from "./styles.module.css"
+import { useAppDispatch } from "@/store/hooks"
+import { setPath } from "@/store/features/storage/storageSlice"
+
+import MyImage from "@/assets/images/glasses-1.webp"
 
 export default function Home() {
+  const dispatch = useAppDispatch()
+
+  //чтобы все загружаемые с этой страницы файлы были прикреплены к корневой директории
+  useEffect(() => {
+    dispatch(setPath("/"))
+  }, [])
+
   return (
     <HeaderLayout>
       <div className={styles.createButtonsDesktop}>
@@ -27,11 +43,11 @@ export default function Home() {
           <CategoryRow />
         </section>
         <section className={styles.section}>
-          <SectionTitle text='Папки' withShowAllBtn />
+          <SectionTitle text='Папки' showAllLink='/folders' />
           <FoldersRow />
         </section>
         <section className={styles.section}>
-          <SectionTitle text='Недавние файлы' withShowAllBtn />
+          <SectionTitle text='Недавние файлы' showAllLink='/folders' />
           <RecentFiles />
         </section>
       </main>

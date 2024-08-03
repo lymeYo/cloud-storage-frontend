@@ -1,4 +1,4 @@
 export type Tuser = {
-  email: string | null
-  uid: string
+  username: string | null
+  id: number
 }

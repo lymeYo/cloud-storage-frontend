@@ -3,21 +3,25 @@
   flex-direction: column;
 }
 
-.list li {
+.listItem {
   --border: 1px solid var(--main-dim-clr);
   border-top: var(--border);
   border-bottom: var(--border);
 }
 
-.list li:first-child {
+.listItem:first-child {
   border-top: none;
   border-bottom: none;
 }
 
-.list li:nth-child(2) {
+.listItem:nth-child(2) {
   border-top: none;
 }
 
-.list li:last-child {
+.listItem:last-child {
   border-bottom: none;
+}
+
+.skeleton {
+  height: 50px;
 }

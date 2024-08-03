@@ -36,8 +36,8 @@
   transition: top 0.3s;
 }
 
-.menuBtn:active {
-  top: 1px;
+.menuBtn:hover svg path {
+  stroke: var(--link-clr);
 }
 
 .searchArea {

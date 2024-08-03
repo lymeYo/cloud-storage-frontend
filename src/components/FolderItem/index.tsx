@@ -4,19 +4,18 @@ import React, { KeyboardEvent, MouseEvent, useMemo, useState } from "react"
 import Link from "next/link"
 
 import FoldersSvg from "@/UI/Svgs/FoldersSvg"
-import CardBody from "@/UI/Card/CardBody"
 import CardWrapper from "@/UI/Card/CardWrapper"
-import ItemMenu from "./ItemMenu"
 
 import styles from "./styles.module.css"
 import { useAppSelector } from "@/store/hooks"
+import { contextTypes } from "@/modules/ContextMenuWrapper/utils"
 
 interface Props {
   title: string
-  itemsCount: number
+  storageId: number
 }
 
-const FolderItem = ({ title, itemsCount }: Props) => {
+const FolderItem = ({ title, storageId }: Props) => {
   const { currentPath } = useAppSelector((state) => state.storage)
 
   // const keyDownHandler = (event: KeyboardEvent) => {
@@ -34,26 +33,22 @@ const FolderItem = ({ title, itemsCount }: Props) => {
 
   //   handleItem()
   // }
-  const infoStr = useMemo(() => {
-    if (itemsCount >= 11 && itemsCount <= 14) return itemsCount + " элементов"
-    if (itemsCount % 10 == 1) return itemsCount + " элемент"
-    if (itemsCount % 10 >= 2 && itemsCount % 10 <= 4) return itemsCount + " элемента"
-    return itemsCount + " элементов"
-  }, [itemsCount])
-
-  const menuItemId = "directory-item-menu"
 
   return (
     <Link href={"/folders" + currentPath + title}>
-      <div className={styles.wrapper} tabIndex={0}>
-        <CardWrapper>
-          <div className={styles.header}>
-            <div className={styles.folderSvgWrapper}>
-              <FoldersSvg />
+      <div className={styles.wrapper} data-context-id={storageId} data-context-type={contextTypes.folder}>
+        <CardWrapper withButton>
+          <div className={styles.cardContainer}>
+            <div className={styles.header}>
+              <div className={styles.folderSvgWrapper}>
+                <FoldersSvg />
+              </div>
             </div>
-            <ItemMenu id={menuItemId} />
+            <div className={styles.body}>
+              <span className={styles.title}>{title}</span>
+              <span className={styles.info}>info...</span>
+            </div>
           </div>
-          <CardBody title={title} info={infoStr} />
         </CardWrapper>
       </div>
     </Link>

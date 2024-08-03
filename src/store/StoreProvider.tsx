@@ -2,15 +2,9 @@
 import { ReactNode, useEffect, useRef } from "react"
 import { Provider } from "react-redux"
 
-import { onAuthStateChanged } from "firebase/auth"
-
 import { AppStore, makeStore } from "./store"
-import { auth } from "@/database/firebase"
-import { useAppDispatch } from "./hooks"
-import { setUserData } from "./features/auth/authSlice"
-import { fetchStorageData } from "./features/storage/storageSlice"
-
-// import { initializeCount } from "../lib/features/counter/counterSlice"
+import { userApi } from "./api/user"
+import { openAuthModal } from "./features/ui/uiSlice"
 
 interface Props {
   children: ReactNode
@@ -18,18 +12,21 @@ interface Props {
 
 export default function StoreProvider({ children }: Props) {
   const storeRef = useRef<AppStore | null>(null)
+  if (!storeRef.current) storeRef.current = makeStore()
 
-  if (!storeRef.current) {
-    storeRef.current = makeStore()
-  }
-
+  //авторизация при наличии токена после загрузки страницы
   useEffect(() => {
-    onAuthStateChanged(auth, (currentUser) => {
-      if (currentUser && storeRef.current) {
-        storeRef.current.dispatch(setUserData({ uid: currentUser.uid, email: currentUser.email }))
-        // storeRef.current.dispatch(fetchStorageData(...))
+    const fetchUserData = async () => {
+      if (!storeRef.current) return
+
+      const { error } = await storeRef.current.dispatch(userApi.endpoints.profile.initiate())
+
+      //проверка на то был ли токен на клиенте до этого или нет. Если был - 403 статус - показать окно авторизации
+      if (error && "originalStatus" in error && error.originalStatus == 403) {
+        storeRef.current.dispatch(openAuthModal())
       }
-    })
+    }
+    fetchUserData()
   }, [])
 
   return <Provider store={storeRef.current}>{children}</Provider>

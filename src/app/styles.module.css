@@ -25,16 +25,3 @@
     display: block;
   }
 }
-
-.test {
-  background-color: wheat;
-  display: flex;
-  overflow-x: auto;
-}
-
-.test div {
-  background-color: palegreen;
-  border: 2px solid firebrick;
-  min-width: 300px;
-  height: 100px;
-}

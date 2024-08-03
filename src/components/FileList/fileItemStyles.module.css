@@ -3,6 +3,7 @@
   grid-template-columns: repeat(3, 1fr);
   align-items: center;
   padding: 10px 0;
+  width: 100%;
 }
 
 .bindingComma {

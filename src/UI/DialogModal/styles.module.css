@@ -1,0 +1,66 @@
+.dialog {
+  z-index: 100;
+  width: 100%;
+  max-width: 500px;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  color: var(--text-clr);
+}
+
+.dialog::backdrop {
+  background-color: var(--main-hover-clear-clr);
+}
+
+.dialog[open] {
+  animation: appearing-content 0.35s forwards;
+}
+
+.dialog[open]::backdrop {
+  animation: appearing-backdrop 0.35s forwards;
+}
+
+.dialog.closing {
+  animation: disappearing-content 0.35s forwards;
+}
+.dialog::backdrop.closing {
+  animation: appearing-backdrop 0.35s backwards;
+}
+
+.dialogContent {
+  border-radius: 5px;
+  border: 2px solid var(--main-dim-clr);
+  background-color: var(--main-dark-clr);
+  box-sizing: border-box;
+  padding: 30px;
+}
+
+@keyframes appearing-content {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes disappearing-content {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes appearing-backdrop {
+  0% {
+    background-color: transparent;
+  }
+
+  100% {
+    background-color: var(--main-hover-clear-clr);
+  }
+}
